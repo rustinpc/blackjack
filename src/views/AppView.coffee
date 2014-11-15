@@ -19,18 +19,8 @@ class window.AppView extends Backbone.View
       ##console.log(@$('.topView'));
       ##$('.topView').prepend("<h1>Done!!!</h1>")
     @model.on 'change:gameOver', =>
-      [playerMinScore, playerMaxScore] = @model.get('playerHand').scores()
-      [dealerMinScore, dealerMaxScore] = @model.get('dealerHand').scores()
-
-      if(playerMaxScore > 21)
-        playerScore = playerMinScore
-      else
-        playerScore = playerMaxScore
-
-      if(dealerMaxScore > 21)
-        dealerScore = dealerMinScore
-      else
-        dealerScore = dealerMaxScore
+      playerScore = @model.get('playerHand').realScore()
+      dealerScore = @model.get('dealerHand').realScore()
 
       if (playerScore > 21)
         $('.topView').prepend("<h1>You BUSTED!!!</h1>")

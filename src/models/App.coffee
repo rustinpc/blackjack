@@ -7,9 +7,7 @@ class window.App extends Backbone.Model
     @set('dealerHand', deck.dealDealer())
     @get('playerHand').on 'stand', =>
       @set('dealerTurn', true)
-      @get('dealerHand').computerPlay()
-    @get('dealerHand').on 'done', =>
-      @set('gameOver', true)
+      @computerPlay()
     @get('playerHand').on 'done', =>
       @set('gameOver', true)
 
@@ -17,3 +15,19 @@ class window.App extends Backbone.Model
 
   dealerTurn: false
 
+  computerPlay: ->
+    [cardOne] = @get('dealerHand').models
+    console.log("before", cardOne)
+    if not cardOne.get 'revealed'
+      cardOne.flip()
+      console.log("flipped", cardOne)
+    else
+      console.log("not flipped", cardOne)
+    [dealerMinScore, dealerMaxScore] = @get('dealerHand').scores()
+    [playerMinScore, playerMaxScore] = @get('playerHand').scores()
+
+    if (dealerMinScore >= 17) or (21 >= dealerMaxScore >= 18) or  @get('dealerHand').realScore() >= @get('playerHand').realScore()
+      @set('gameOver', true)
+    else
+      @get('dealerHand').hit()
+      @computerPlay()
