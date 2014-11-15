@@ -22,11 +22,21 @@ class window.AppView extends Backbone.View
       [playerMinScore, playerMaxScore] = @model.get('playerHand').scores()
       [dealerMinScore, dealerMaxScore] = @model.get('dealerHand').scores()
 
-      if (@model.get('playerHand').scores() > 21)
+      if(playerMaxScore > 21)
+        playerScore = playerMinScore
+      else
+        playerScore = playerMaxScore
+
+      if(dealerMaxScore > 21)
+        dealerScore = dealerMinScore
+      else
+        dealerScore = dealerMaxScore
+
+      if (playerScore > 21)
         $('.topView').prepend("<h1>You BUSTED!!!</h1>")
-      else if (@model.get('dealerHand').scores() > 21)
+      else if (dealerScore > 21)
         $('.topView').prepend("<h1>Dealer BUSTED!!!</h1>")
-      else if (@model.get('dealerHand').scores() >= @model.get('playerHand').scores())
+      else if (dealerScore >= playerScore)
         $('.topView').prepend("<h1>The House ALWAYS Wins!!!</h1>")
       else
         $('.topView').prepend("<h1>You Won!!!</h1>")

@@ -6,10 +6,11 @@ class window.App extends Backbone.Model
     @set('playerHand', deck.dealPlayer())
     @set('dealerHand', deck.dealDealer())
     @get('playerHand').on 'stand', =>
-      console.log('stood')
       @set('dealerTurn', true)
       @get('dealerHand').computerPlay()
     @get('dealerHand').on 'done', =>
+      @set('gameOver', true)
+    @get('playerHand').on 'done', =>
       @set('gameOver', true)
 
   gameOver: false
