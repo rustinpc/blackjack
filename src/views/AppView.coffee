@@ -9,31 +9,38 @@ class window.AppView extends Backbone.View
   '
 
   events:
-    'click .hit-button': -> @model.get('playerHand').hit()
-    'click .stand-button': -> @model.get('playerHand').stand()
+    'click .hit-button': ->
+      @model.get('playerHand').hit()
+    'click .stand-button': ->
+      @model.get('playerHand').stand()
     'click .restart-button': ->
-      console.log('clicked')
       @model.deal()
+      @render()
 
   initialize: ->
     @render()
     @model.on 'change:dealerTurn', =>
-      @$('button').remove()
-      ##console.log(@$('.topView'));
-      ##$('.topView').prepend("<h1>Done!!!</h1>")
-    @model.on 'change:gameOver', =>
-      playerScore = @model.get('playerHand').realScore()
-      dealerScore = @model.get('dealerHand').realScore()
+      @$('button').remove() if @model.get('dealerTurn')
 
-      if (playerScore > 21)
-        $('.topView').prepend("<h1>You BUSTED!!!</h1>")
-      else if (dealerScore > 21)
-        $('.topView').prepend("<h1>Dealer BUSTED!!!</h1>")
-      else if (dealerScore >= playerScore)
-        $('.topView').prepend("<h1>The House ALWAYS Wins!!!</h1>")
-      else
-        $('.topView').prepend("<h1>You Won!!!</h1>")
-      $('h1').append("<button class='restart-button'>Play Again</button>")
+
+
+
+    @model.on 'change:gameOver', =>
+      if @model.get('gameOver')
+        playerScore = @model.get('playerHand').realScore()
+        dealerScore = @model.get('dealerHand').realScore()
+
+        if (playerScore > 21)
+          $('.topView').prepend("<h1>You BUSTED!!!</h1>")
+        else if (dealerScore > 21)
+          $('.topView').prepend("<h1>Dealer BUSTED!!!</h1>")
+        else if (dealerScore >= playerScore)
+          $('.topView').prepend("<h1>The House ALWAYS Wins!!!</h1>")
+        else
+          $('.topView').prepend("<h1>You Won!!!</h1>")
+        @$('button').remove()
+        $('h1').append("<button class='restart-button'>Play Again</button>")
+        console.log @model.get('deck')
 
 
   render: ->

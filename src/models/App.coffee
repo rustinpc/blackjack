@@ -5,24 +5,25 @@ class window.App extends Backbone.Model
     @set('deck', deck = new Deck())
     @set('playerHand', deck.dealPlayer())
     @set('dealerHand', deck.dealDealer())
+    @reInit()
+
+  gameOver: false
+
+  dealerTurn: false
+
+  reInit: ->
     @get('playerHand').on 'stand', =>
       @set('dealerTurn', true)
       @computerPlay()
     @get('playerHand').on 'done', =>
       @set('gameOver', true)
 
-  gameOver: false
 
-  dealerTurn: false
 
   computerPlay: ->
     [cardOne] = @get('dealerHand').models
-    console.log("before", cardOne)
     if not cardOne.get 'revealed'
       cardOne.flip()
-      console.log("flipped", cardOne)
-    else
-      console.log("not flipped", cardOne)
     [dealerMinScore, dealerMaxScore] = @get('dealerHand').scores()
     [playerMinScore, playerMaxScore] = @get('playerHand').scores()
 
@@ -33,12 +34,12 @@ class window.App extends Backbone.Model
       @computerPlay()
 
   deal: ->
-    console.log('deal')
     if(@get('deck').models.length < 10)
       @set('deck', deck = new Deck())
     @set('playerHand', @get('deck').dealPlayer())
     @set('dealerHand', @get('deck').dealDealer())
     @set('gameOver', false)
     @set('dealerTurn', false)
+    @reInit()
 
 
