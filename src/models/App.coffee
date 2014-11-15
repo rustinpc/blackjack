@@ -8,6 +8,8 @@ class window.App extends Backbone.Model
     @get('playerHand').on 'stand', =>
       console.log('stood')
       @set('dealerTurn', true)
+      @get('dealerHand').computerPlay()
+
 
   dealerTurn: false;
 

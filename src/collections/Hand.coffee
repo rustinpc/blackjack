@@ -24,4 +24,14 @@ class window.Hand extends Backbone.Collection
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
 
+  computerPlay: ->
+    if not @models[0].get 'revealed'
+      @models[0].flip()
 
+    [minScore, maxScore] = @scores()
+
+    if (minScore >= 17) or (21 >= maxScore >= 18)
+      @trigger('done')
+    else
+      @hit()
+      @computerPlay()
