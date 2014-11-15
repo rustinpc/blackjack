@@ -11,6 +11,17 @@
   background-color: black;
 }
 
+.covered .bg {
+  background-color: black;
+  background-image: url(../img/card-back.png) !important;
+}
+
+.bg {
+  background-size: 100px 140px;
+  width: 100px;
+  height: 140px;
+}
+
 .hand {
   overflow: auto;
 }
