@@ -16,9 +16,20 @@ class window.AppView extends Backbone.View
     @render()
     @model.on 'change:dealerTurn', =>
       @$('button').remove()
-      console.log(@$('.topView'));
-      $('.topView').prepend("<h1>Done!!!</h1>")
+      ##console.log(@$('.topView'));
+      ##$('.topView').prepend("<h1>Done!!!</h1>")
+    @model.on 'change:gameOver', =>
+      [playerMinScore, playerMaxScore] = @model.get('playerHand').scores()
+      [dealerMinScore, dealerMaxScore] = @model.get('dealerHand').scores()
 
+      if (@model.get('playerHand').scores() > 21)
+        $('.topView').prepend("<h1>You BUSTED!!!</h1>")
+      else if (@model.get('dealerHand').scores() > 21)
+        $('.topView').prepend("<h1>Dealer BUSTED!!!</h1>")
+      else if (@model.get('dealerHand').scores() >= @model.get('playerHand').scores())
+        $('.topView').prepend("<h1>The House ALWAYS Wins!!!</h1>")
+      else
+        $('.topView').prepend("<h1>You Won!!!</h1>")
 
   render: ->
     @$el.children().detach()

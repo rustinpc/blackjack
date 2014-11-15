@@ -9,7 +9,10 @@ class window.App extends Backbone.Model
       console.log('stood')
       @set('dealerTurn', true)
       @get('dealerHand').computerPlay()
+    @get('dealerHand').on 'done', =>
+      @set('gameOver', true)
 
+  gameOver: false
 
-  dealerTurn: false;
+  dealerTurn: false
 
