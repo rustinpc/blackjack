@@ -11,6 +11,9 @@ class window.AppView extends Backbone.View
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.get('playerHand').stand()
+    'click .restart-button': ->
+      console.log('clicked')
+      @model.deal()
 
   initialize: ->
     @render()
@@ -30,6 +33,8 @@ class window.AppView extends Backbone.View
         $('.topView').prepend("<h1>The House ALWAYS Wins!!!</h1>")
       else
         $('.topView').prepend("<h1>You Won!!!</h1>")
+      $('h1').append("<button class='restart-button'>Play Again</button>")
+
 
   render: ->
     @$el.children().detach()

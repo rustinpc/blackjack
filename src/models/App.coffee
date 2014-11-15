@@ -31,3 +31,14 @@ class window.App extends Backbone.Model
     else
       @get('dealerHand').hit()
       @computerPlay()
+
+  deal: ->
+    console.log('deal')
+    if(@get('deck').models.length < 10)
+      @set('deck', deck = new Deck())
+    @set('playerHand', @get('deck').dealPlayer())
+    @set('dealerHand', @get('deck').dealDealer())
+    @set('gameOver', false)
+    @set('dealerTurn', false)
+
+
