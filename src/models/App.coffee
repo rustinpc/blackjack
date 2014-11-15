@@ -25,16 +25,6 @@ class window.App extends Backbone.Model
     else if @get('playerHand').twentyOne() == 21
       @set('gameOver', true)
       @set('blackjack', true)
-    #   console.log 'blj'
-    # console.log dealerScore
-
-    # @get('playerHand').on 'blackJack', =>
-    #   console.log('black jack trigger player')
-    #   @set('gameOver', true)
-    # @get('dealerHand').on 'blackJack', =>
-    #   console.log('black jack trigger comp')
-    #   @computerPlay()
-
 
 
   computerPlay: ->
@@ -45,7 +35,6 @@ class window.App extends Backbone.Model
     [playerMinScore, playerMaxScore] = @get('playerHand').scores()
 
     if (dealerMinScore >= 17) or (21 >= dealerMaxScore >= 18) or  @get('dealerHand').realScore() >= @get('playerHand').realScore()
-      console.log "over"
       @set('gameOver', true)
     else
       @get('dealerHand').hit()

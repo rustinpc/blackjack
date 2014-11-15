@@ -22,32 +22,24 @@ class window.AppView extends Backbone.View
     @model.on 'change:dealerTurn', =>
       @$('button').remove() if @model.get('dealerTurn')
 
-    if @model.get('blackjack')
-      @endGame()
     @model.on 'change:gameOver', =>
-      console.log('blackjack')
       if @model.get('gameOver')
         @endGame()
-      # if @model.get('gameOver')
-      #   playerScore = @model.get('playerHand').realScore()
-      #   dealerScore = @model.get('dealerHand').realScore()
+    setTimeout(@endAtStart,100)
 
-      #   if (playerScore > 21)
-      #     $('.topView').prepend("<h1>You BUSTED!!!</h1>")
-      #   else if (dealerScore > 21)
-      #     $('.topView').prepend("<h1>Dealer BUSTED!!!</h1>")
-      #   else if (dealerScore >= playerScore)
-      #     $('.topView').prepend("<h1>The House ALWAYS Wins!!!</h1>")
-      #   else
-      #     $('.topView').prepend("<h1>You Won!!!</h1>")
-      #   @$('button').remove()
-      #   $('h1').append("<button class='restart-button'>Play Again</button>")
+  endAtStart: =>
+    if @model.get('blackjack')
+      @endGame('blackjack')
 
-  endGame: ->
-    playerScore = @model.get('playerHand').realScore()
-    dealerScore = @model.get('dealerHand').realScore()
-
+  endGame: (blackjack) ->
+    if blackjack
+      playerScore = @model.get('playerHand').twentyOne()
+      dealerScore = @model.get('dealerHand').twentyOne()
+    else
+      playerScore = @model.get('playerHand').realScore()
+      dealerScore = @model.get('dealerHand').realScore()
     if (playerScore > 21)
+
       $('.topView').prepend("<h1>You BUSTED!!!</h1>")
     else if (dealerScore > 21)
       $('.topView').prepend("<h1>Dealer BUSTED!!!</h1>")
