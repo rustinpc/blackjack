@@ -13,7 +13,10 @@ class window.HandView extends Backbone.View
     @$el.children().detach()
     @$el.html @template @collection
     if (@collection.minScore() > 21)
-      @$el.append("<h2> You Busted</h2>")
+      if @collection.isDealer
+        @$el.append("<h2>Dealer Busted</h2>")
+      else
+        @$el.append("<h2>You Busted</h2>")
 
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el

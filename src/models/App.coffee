@@ -13,6 +13,16 @@ class window.App extends Backbone.Model
 
   dealerTurn: false
 
+  dealerWins: 0
+
+  playerWins: 0
+
+  dealerWin: ->
+    @dealerWins += 1
+
+  playerWin: ->
+    @playerWins += 1
+
   reInit: ->
     @get('playerHand').on 'stand', =>
       @set('dealerTurn', true)

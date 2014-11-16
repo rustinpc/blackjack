@@ -25,3 +25,10 @@
 .hand {
   overflow: auto;
 }
+
+.winCount {
+  float: right;
+  width: 100px;
+  padding: 20px;
+  border: 1px black solid;
+}
