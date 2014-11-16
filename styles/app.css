@@ -1,3 +1,9 @@
+body {
+  background-image: url(../img/table_background.jpg);
+  color: white;
+  margin: 20px;
+}
+
 .card {
   float: left;
   border: solid 1px black;
@@ -30,5 +36,5 @@
   float: right;
   width: 100px;
   padding: 20px;
-  border: 1px black solid;
+  border: 1px white solid;
 }
